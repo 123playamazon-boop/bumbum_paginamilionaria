@@ -353,6 +353,13 @@ footer .disclaimer{color:#777;font-size:11px;margin-top:14px}
 .exit-modal .exit-no{display:block;text-align:center;color:#999;font-size:12px;background:none;border:none;cursor:pointer;text-decoration:underline;padding:6px;margin:0 auto;font-family:inherit}
 .exit-modal .exit-trust{display:flex;gap:10px;justify-content:center;margin-top:14px;font-size:11px;color:var(--cnn-meta)}
 </style>
+<!-- NewsBreak Pixel -->
+<script>
+!(function(e,n,t,i,p,a,s){e[i]||(((p=e[i]=function(){p.process?p.process.apply(p,arguments):p.queue.push(arguments)}).queue=[]),(pt=+new Date),((a=n.createElement(t)).async=1),(a.src='https://static.newsbreak.com/business/tracking/nbpixel.js?t='+864e5*Math.ceil(new Date/864e5)),(s=n.getElementsByTagName(t)[0]).parentNode.insertBefore(a,s))})(window,document,'script','nbpix'),
+nbpix('init','ID-2032552853944918018'),
+nbpix('event','page_view');
+</script>
+<!-- /NewsBreak Pixel -->
 </head>
 <body>
 <div class="urgency-bar"><span class="urgency-icon">&#9888;&#65039;</span><strong>FINAL HOURS:</strong> Today&apos;s Brazilian batch &amp; bonuses end in <span class="urgency-time" id="urgencyTime">12:00</span></div>
@@ -1239,5 +1246,24 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
 })();
 </script>
 <!-- =================== END SOCIAL PROOF ROTATOR =================== -->
+<script>
+/* NewsBreak: fire initiate_checkout event with cart value when buy buttons clicked */
+(function(){
+  var packPrices = {'2': 99, '3': 129, '6': 199};
+  document.addEventListener('DOMContentLoaded', function(){
+    document.querySelectorAll('a.buy-btn[data-pack]').forEach(function(btn){
+      btn.addEventListener('click', function(){
+        var pack = btn.getAttribute('data-pack');
+        var value = packPrices[pack] || 0;
+        if(typeof nbpix === 'function'){
+          try {
+            nbpix('event','initiate_checkout',{ nb_value: value });
+          } catch(e) {}
+        }
+      });
+    });
+  });
+})();
+</script>
 </body>
 </html>
