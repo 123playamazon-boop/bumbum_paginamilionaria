@@ -360,6 +360,11 @@ nbpix('init','ID-2032552853944918018'),
 nbpix('event','page_view');
 </script>
 <!-- /NewsBreak Pixel -->
+<!-- Microsoft Clarity -->
+<script type="text/javascript">
+(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","whxdotwqls");
+</script>
+<!-- /Microsoft Clarity -->
 </head>
 <body>
 <div class="urgency-bar"><span class="urgency-icon">&#9888;&#65039;</span><strong>FINAL HOURS:</strong> Today&apos;s Brazilian batch &amp; bonuses end in <span class="urgency-time" id="urgencyTime">12:00</span></div>
@@ -1247,7 +1252,7 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
 </script>
 <!-- =================== END SOCIAL PROOF ROTATOR =================== -->
 <script>
-/* NewsBreak: fire initiate_checkout event with cart value when buy buttons clicked */
+/* Tracking: fire initiate_checkout event to Newsbreak Pixel + Clarity */
 (function(){
   var packPrices = {'2': 99, '3': 129, '6': 199};
   document.addEventListener('DOMContentLoaded', function(){
@@ -1255,13 +1260,36 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
       btn.addEventListener('click', function(){
         var pack = btn.getAttribute('data-pack');
         var value = packPrices[pack] || 0;
+        // Newsbreak Pixel
         if(typeof nbpix === 'function'){
+          try { nbpix('event','initiate_checkout',{ nb_value: value }); } catch(e) {}
+        }
+        // Microsoft Clarity custom event
+        if(typeof clarity === 'function'){
           try {
-            nbpix('event','initiate_checkout',{ nb_value: value });
+            clarity('event','initiate_checkout');
+            clarity('set','plan_clicked', pack + '-jar');
+            clarity('set','order_value', String(value));
           } catch(e) {}
         }
       });
     });
+    // Track scroll-to-pricing as funnel step
+    var pricingShown = false;
+    if('IntersectionObserver' in window){
+      var io = new IntersectionObserver(function(entries){
+        entries.forEach(function(e){
+          if(e.isIntersecting && \!pricingShown){
+            pricingShown = true;
+            if(typeof clarity === 'function'){
+              try { clarity('event','viewed_pricing'); } catch(e) {}
+            }
+          }
+        });
+      },{threshold: 0.3});
+      var pricing = document.querySelector('.packs') || document.querySelector('#offer');
+      if(pricing) io.observe(pricing);
+    }
   });
 })();
 </script>
