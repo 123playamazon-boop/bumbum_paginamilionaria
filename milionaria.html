@@ -387,7 +387,7 @@ nbpix('event','page_view');
 <video autoplay muted loop playsinline preload="metadata" poster="img/ba_real_3.jpg" style="width:100%;height:100%;display:block;object-fit:cover" id="heroVideo">
 <source src="img/intro_video.mp4" type="video/mp4">Your browser does not support video playback.</source>
 </video>
-<div id="heroSoundBtn" onclick="(function(b){var v=document.getElementById('heroVideo');v.muted=\!v.muted;b.innerHTML=v.muted?'&#128263; TAP FOR SOUND':'&#128266; SOUND ON';})(this)" style="position:absolute;bottom:14px;left:14px;background:rgba(0,0,0,.85);color:#fff;padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.8px;cursor:pointer;border-radius:30px;z-index:5;user-select:none">&#128263; TAP FOR SOUND</div>
+<div id="heroSoundBtn" onclick="(function(b){var v=document.getElementById('heroVideo');v.muted=!v.muted;b.innerHTML=v.muted?'&#128263; TAP FOR SOUND':'&#128266; SOUND ON';})(this)" style="position:absolute;bottom:14px;left:14px;background:rgba(0,0,0,.85);color:#fff;padding:8px 16px;font-size:12px;font-weight:800;letter-spacing:.8px;cursor:pointer;border-radius:30px;z-index:5;user-select:none">&#128263; TAP FOR SOUND</div>
 <div style="position:absolute;top:14px;right:14px;background:var(--cnn-red);color:#fff;padding:5px 12px;font-size:11px;font-weight:800;letter-spacing:1.5px;text-transform:uppercase;pointer-events:none">&#9679; LIVE DEMO</div>
 </div>
 </div>
@@ -867,7 +867,29 @@ nbpix('event','page_view');
 (function(){var r=document.getElementById("statsReading");var s=document.getElementById("statsShares");var rN=3847,sN=218401;setInterval(function(){if(Math.random()<0.45){rN+=Math.floor(Math.random()*11)-4;if(rN<3500)rN=3520;if(rN>4200)rN=4180;if(r)r.textContent=rN.toLocaleString()}if(Math.random()<0.25){sN+=Math.floor(Math.random()*3)+1;if(s)s.textContent=sN.toLocaleString()}},3500)})();
 document.querySelectorAll(".faq-item .faq-q").forEach(function(q){q.addEventListener("click",function(){var item=q.closest(".faq-item");var wasOpen=item.classList.contains("open");document.querySelectorAll(".faq-item.open").forEach(function(el){el.classList.remove("open")});if(!wasOpen)item.classList.add("open")})});
 (function(){var reviews=document.getElementById("spReviewCount");var buyers=document.getElementById("spRecentBuyers");var r=4128,b=247;setInterval(function(){if(Math.random()<0.25){r++;if(reviews)reviews.textContent=r.toLocaleString()}if(Math.random()<0.35){b++;if(buyers)buyers.textContent=b}},12000)})();
-(function(){var shown=false;var modal=document.getElementById("exitOverlay");function show(){if(shown)return;shown=true;modal.classList.add("show");try{sessionStorage.setItem("bb_exit_dlp","1")}catch(e){}}function hide(){modal.classList.remove("show")}try{if(sessionStorage.getItem("bb_exit_dlp")==="1")shown=true}catch(e){}document.addEventListener("mouseout",function(e){if(!e.relatedTarget&&e.clientY<10)show()});var lastY=window.scrollY,lastT=Date.now(),engaged=false;setTimeout(function(){engaged=true},15000);window.addEventListener("scroll",function(){var y=window.scrollY,t=Date.now();var dy=lastY-y,dt=t-lastT;if(engaged&&dy>160&&dt<350&&y<300)show();lastY=y;lastT=t},{passive:true});if(!shown){history.pushState({exit:true},"");window.addEventListener("popstate",function(){if(!shown){show();history.pushState({exit:true},"")}})}document.getElementById("exitClose").addEventListener("click",hide);document.getElementById("exitNo").addEventListener("click",hide);document.getElementById("exitCta").addEventListener("click",function(e){e.preventDefault();hide();document.querySelector("#offer").scrollIntoView({behavior:"smooth"})});modal.addEventListener("click",function(e){if(e.target===modal)hide()})})();
+(function(){
+var isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+var modal = document.getElementById("exitOverlay");
+if(!modal) return;
+var shown = false;
+function show(){ if(shown) return; shown=true; modal.classList.add("show"); try{sessionStorage.setItem("bb_exit_dlp","1")}catch(e){} }
+function hide(){ modal.classList.remove("show") }
+try{ if(sessionStorage.getItem("bb_exit_dlp")==="1") shown=true }catch(e){}
+if(!isMobile){
+  var engaged = false;
+  setTimeout(function(){ engaged = true }, 30000);
+  document.addEventListener("mouseout", function(e){
+    if(engaged && !e.relatedTarget && e.clientY < 10) show();
+  });
+}
+var closeBtn = document.getElementById("exitClose");
+if(closeBtn) closeBtn.addEventListener("click", hide);
+var noBtn = document.getElementById("exitNo");
+if(noBtn) noBtn.addEventListener("click", hide);
+var ctaBtn = document.getElementById("exitCta");
+if(ctaBtn) ctaBtn.addEventListener("click", function(){ hide(); });
+modal.addEventListener("click", function(e){ if(e.target===modal) hide() });
+})();
 (function(){var p=new URLSearchParams(window.location.search);var rtkcid=p.get("rtkcid");if(rtkcid){try{sessionStorage.setItem("rtkcid",rtkcid)}catch(e){}}else{try{rtkcid=sessionStorage.getItem("rtkcid")}catch(e){}}if(!rtkcid)return;function rewriteLinks(){document.querySelectorAll("a[href]").forEach(function(a){try{var href=a.getAttribute("href");if(!href||/^(mailto:|tel:|#)/i.test(href))return;if(/^https?:\/\//i.test(href)&&!href.includes(window.location.host)&&!href.includes("buy.stripe.com"))return;var u=new URL(a.href,window.location.href);u.searchParams.set("rtkcid",rtkcid);a.href=u.toString()}catch(e){}})}if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded",rewriteLinks)}else{rewriteLinks()}})();
 </script>
 
@@ -951,10 +973,11 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
   }, 12000);
 })();
 
-// Exit-intent popup
+// Exit-intent popup (mobile-aware)
 (function(){
+  var isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   var modal = document.getElementById("exitOverlay");
-  if (!modal) return;
+  if (\!modal) return;
   var shown = false;
   function show(){
     if (shown) return;
@@ -966,37 +989,22 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
   try {
     if (sessionStorage.getItem("bb_exit_v3") === "1") shown = true;
   } catch(e){}
-  document.addEventListener("mouseout", function(e){
-    if (!e.relatedTarget && e.clientY < 10) show();
-  });
-  var lastY = window.scrollY, lastT = Date.now(), engaged = false;
-  setTimeout(function(){ engaged = true; }, 15000);
-  window.addEventListener("scroll", function(){
-    var y = window.scrollY, t = Date.now();
-    var dy = lastY - y, dt = t - lastT;
-    if (engaged && dy > 160 && dt < 350 && y < 300) show();
-    lastY = y; lastT = t;
-  }, { passive: true });
-  if (!shown) {
-    history.pushState({exit:true}, "");
-    window.addEventListener("popstate", function(){
-      if (!shown) {
-        show();
-        history.pushState({exit:true}, "");
-      }
+  // Mobile: NO exit intent. Touch devices don't have leave-page semantics.
+  // Desktop: only mouseout-top-edge after 30s engagement.
+  if (\!isMobile) {
+    var engaged = false;
+    setTimeout(function(){ engaged = true; }, 30000);
+    document.addEventListener("mouseout", function(e){
+      if (engaged && \!e.relatedTarget && e.clientY < 10) show();
     });
   }
   var c = document.getElementById("exitClose");
   if (c) c.addEventListener("click", hide);
   var n = document.getElementById("exitNo");
   if (n) n.addEventListener("click", hide);
+  // CTA: do NOT preventDefault. Let href take user to Stripe.
   var ec = document.getElementById("exitCta");
-  if (ec) ec.addEventListener("click", function(e){
-    e.preventDefault();
-    hide();
-    var off = document.querySelector("#offer");
-    if (off) off.scrollIntoView({behavior:"smooth"});
-  });
+  if (ec) ec.addEventListener("click", function(){ hide(); });
   modal.addEventListener("click", function(e){
     if (e.target === modal) hide();
   });
@@ -1279,7 +1287,7 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
     if('IntersectionObserver' in window){
       var io = new IntersectionObserver(function(entries){
         entries.forEach(function(e){
-          if(e.isIntersecting && \!pricingShown){
+          if(e.isIntersecting && !pricingShown){
             pricingShown = true;
             if(typeof clarity === 'function'){
               try { clarity('event','viewed_pricing'); } catch(e) {}
