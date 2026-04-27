@@ -339,7 +339,7 @@ footer .disclaimer{color:#777;font-size:11px;margin-top:14px}
 .sticky-mobile-cta{display:none;position:fixed;left:0;right:0;bottom:0;z-index:9997;background:#fff;border-top:1px solid var(--cnn-border);padding:10px 14px env(safe-area-inset-bottom) 10px;box-shadow:0 -4px 14px rgba(0,0,0,.08)}
 .sticky-mobile-cta a{display:block;background:var(--cnn-red);color:#fff;font-size:14.5px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;text-decoration:none;text-align:center;padding:14px 10px;border-radius:3px;font-family:inherit}
 .sticky-mobile-cta .tiny{font-size:10.5px;color:var(--cnn-meta);text-align:center;margin-top:4px;letter-spacing:.2px}
-@media(max-width:760px){.sticky-mobile-cta{display:block}body{padding-bottom:90px}}
+
 .exit-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.78);z-index:9998;align-items:center;justify-content:center;padding:20px;animation:fadeIn .25s}
 .exit-overlay.show{display:flex}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
@@ -858,11 +858,11 @@ nbpix('event','page_view');
 </div>
 </section>
 <footer><div class="inner"><strong style="color:#fff">Beauty &amp; Wellness Daily</strong> &nbsp;&middot;&nbsp; Independent reporting on skincare, beauty, and non-invasive transformation.<br>This article is an advertorial. Statements regarding cosmetic products have not been evaluated by the FDA. References to Brazilian celebrities, models, and beauty culture are general &mdash; not endorsements. &copy; 2026 Beauty &amp; Wellness Daily.<div class="disclaimer">Amanda R., Linda D., Michelle R., and Diana L. are composite representations based on reader submissions; results are not typical.</div></div></footer>
-<div class="sticky-mobile-cta"><a href="https://buy.stripe.com/fZubJ1bu72Yte1N205fMA0o" class="buy-btn" data-pack="3" onclick="if(typeof nbpix==='function'){try{nbpix('event','initiate_checkout',{nb_value:129});}catch(e){}}if(typeof clarity==='function'){try{clarity('event','initiate_checkout');clarity('set','plan_clicked','3-jar-sticky');}catch(e){}}">&rarr; Get BumBum Cream &middot; 60% Off + $227 Free Bonuses</a><div class="tiny">89,432 women &middot; 60-day money-back &middot; ships from USA</div></div>
+
 <div class="exit-overlay" id="exitOverlay"><div class="exit-modal"><button class="exit-close" id="exitClose" aria-label="Close">&times;</button><div class="exit-badge">&#9888; Wait &mdash; before you leave</div><h2>Wait! Save an extra <span>$20</span> if you order in the next 5 minutes.</h2><p>Use code <strong style="background:var(--cnn-red);color:#fff;padding:3px 10px;font-family:monospace;letter-spacing:2px;font-weight:800">SAVE20</strong> at checkout for an additional $20 off any plan. Plus you keep all $227 in free bonuses. This code expires when you leave this page.</p><a href="https://buy.stripe.com/fZubJ1bu72Yte1N205fMA0o" class="exit-cta buy-btn" data-pack="3" id="exitCta" onclick="if(typeof nbpix==='function'){try{nbpix('event','initiate_checkout',{nb_value:129});}catch(e){}}if(typeof clarity==='function'){try{clarity('event','initiate_checkout');clarity('set','plan_clicked','3-jar-save20');}catch(e){}}">Yes &mdash; Apply My SAVE20 Code &rarr;</a><button class="exit-no" id="exitNo">No thanks, I&apos;ll keep hiding from the mirror</button><div class="exit-trust"><span>&#128274; 60-day refund</span><span>&middot;</span><span>Cruelty-Free</span><span>&middot;</span><span>Ships from USA</span></div></div></div>
 <script>
 (function(){var qs=window.location.search;if(!qs)return;var params=qs.substring(1);function append(href){return href+(href.indexOf("?")!==-1?"&":"?")+params}function forwardAll(){document.querySelectorAll("a[href*=\"buy.stripe.com\"]").forEach(function(a){var h=a.getAttribute("href");if(h&&h.indexOf(params)===-1)a.setAttribute("href",append(h))})}forwardAll();document.addEventListener("DOMContentLoaded",forwardAll);setTimeout(forwardAll,500)})();
-(function(){var el=document.getElementById("liveCount");var n=3247;setInterval(function(){n+=Math.floor(Math.random()*7)-3;if(n<2900)n=2920;if(n>3700)n=3680;el.textContent=n.toLocaleString()},2800)})();
+(function(){var el=document.getElementById("liveCount");if(!el)return;var n=3247;setInterval(function(){n+=Math.floor(Math.random()*7)-3;if(n<2900)n=2920;if(n>3700)n=3680;if(el)el.textContent=n.toLocaleString()},2800)})();
 (function(){var el=document.getElementById("urgencyTime");if(!el)return;var end;try{end=parseInt(sessionStorage.getItem("bb_urg_dlp")||"0");if(!end||end<Date.now()){end=Date.now()+12*60*1000;sessionStorage.setItem("bb_urg_dlp",String(end))}}catch(e){end=Date.now()+12*60*1000}function tick(){var left=Math.max(0,end-Date.now());var m=Math.floor(left/60000),s=Math.floor((left%60000)/1000);el.textContent=(m<10?"0":"")+m+":"+(s<10?"0":"")+s;if(left<=0){end=Date.now()+12*60*1000;try{sessionStorage.setItem("bb_urg_dlp",String(end))}catch(e){}}}tick();setInterval(tick,1000)})();
 (function(){var r=document.getElementById("statsReading");var s=document.getElementById("statsShares");var rN=3847,sN=218401;setInterval(function(){if(Math.random()<0.45){rN+=Math.floor(Math.random()*11)-4;if(rN<3500)rN=3520;if(rN>4200)rN=4180;if(r)r.textContent=rN.toLocaleString()}if(Math.random()<0.25){sN+=Math.floor(Math.random()*3)+1;if(s)s.textContent=sN.toLocaleString()}},3500)})();
 document.querySelectorAll(".faq-item .faq-q").forEach(function(q){q.addEventListener("click",function(){var item=q.closest(".faq-item");var wasOpen=item.classList.contains("open");document.querySelectorAll(".faq-item.open").forEach(function(el){el.classList.remove("open")});if(!wasOpen)item.classList.add("open")})});
@@ -977,7 +977,7 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
 (function(){
   var isMobile = /iPhone|iPad|iPod|Android|Mobile|webOS|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
   var modal = document.getElementById("exitOverlay");
-  if (\!modal) return;
+  if (!modal) return;
   var shown = false;
   function show(){
     if (shown) return;
@@ -991,11 +991,11 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
   } catch(e){}
   // Mobile: NO exit intent. Touch devices don't have leave-page semantics.
   // Desktop: only mouseout-top-edge after 30s engagement.
-  if (\!isMobile) {
+  if (!isMobile) {
     var engaged = false;
     setTimeout(function(){ engaged = true; }, 30000);
     document.addEventListener("mouseout", function(e){
-      if (engaged && \!e.relatedTarget && e.clientY < 10) show();
+      if (engaged && !e.relatedTarget && e.clientY < 10) show();
     });
   }
   var c = document.getElementById("exitClose");
@@ -1051,12 +1051,7 @@ document.querySelectorAll(".faq-item .faq-q").forEach(function(q){
         if (e.isIntersecting) {
           hasSeenOffer = true;
           // Update sticky CTA text + link
-          var sticky = document.querySelector(".sticky-mobile-cta a");
-          if (sticky) {
-            sticky.innerHTML = "&rarr; Buy 3-Jar Plan Now &middot; $129 + $227 Bonuses";
-            sticky.setAttribute("href", directBuyURL);
-            sticky.removeAttribute("onclick");
-          }
+          // sticky CTA removed for editorial feel
         }
       });
     }, {threshold: 0.4}).observe(offer);
